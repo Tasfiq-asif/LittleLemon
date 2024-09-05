@@ -7,8 +7,9 @@ export default {
   theme: {
     extend: {
       fontFamily:{
-        Poppins:"'Poppins',sans-serif"
-      }
+        Poppins:"'Poppins',sans-serif",
+        'great-vibes': "great-vibes-regular,cursive"
+      },
     },
   },
    plugins: [require("daisyui")],
