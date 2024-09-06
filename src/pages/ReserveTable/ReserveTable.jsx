@@ -1,9 +1,11 @@
+import Calender from "../../components/Calender/Calender";
 
 
 const ReserveTable = () => {
     return (
-        <div>
+        <div className="bg-white">
             <h1>Reserve Table</h1>
+            <Calender/>
         </div>
     );
 };

@@ -3,3 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.css-16nxa1f-MuiTypography-root-MuiDatePickerToolbar-title{
+    margin: auto;
+}
