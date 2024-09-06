@@ -10,9 +10,11 @@ import {
 } from "@mui/x-date-pickers/PickersLayout";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import "./Calender.css"
-import { Box, Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, Button, FormControl,  InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useState } from "react";
 import dayjs from "dayjs";
+
+
 
 
 
@@ -69,6 +71,12 @@ function CustomLayout(props) {
 const Calender = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState("");
+    const [name, setName] = useState("");
+    const [guestNumber, setGuestNumber] = useState(2)
+    const [phoneNumber, setPhoneNumber] = useState("")
+    const [phoneError, setPhoneError] = useState(false);
+    const [email,setEmail] = useState("")
+    const [open, setOpen] = useState(false);
 
     const handleDateChange = (newDate) => {
       setSelectedDate(newDate);
@@ -78,17 +86,42 @@ const Calender = () => {
       setSelectedTime(event.target.value);
     };
 
-    const handleConfirm = () => {
-      // Add your confirmation logic here
-      console.log(
-        `Reservation confirmed for ${selectedDate?.format(
-          "MMMM D, YYYY"
-        )} at ${selectedTime}`
-      );
-    };
+    
 
     const today = dayjs()
     const oneMonthLater = today.add(1,'month')
+
+      const validatePhoneNumber = (value) => {
+        // Regular expression for a 10-digit phone number (you can customize it based on your format)
+        const phoneRegex = /^[0-9]{10}$/;
+        return phoneRegex.test(value);
+      };
+
+      const handlePhoneChange = (event) => {
+        const value = event.target.value;
+        setPhoneNumber(value);
+
+        // Validate phone number
+        if (value === "" || validatePhoneNumber(value)) {
+          setPhoneError(false); // Valid phone number
+        } else {
+          setPhoneError(true); // Invalid phone number
+        }
+      };
+
+      //modal dialog
+
+      const handleOpen = () => setOpen(true);
+      const handleClose = () => setOpen(false);
+
+      const handleConfirm = () => {
+        // Add your confirmation logic here
+        console.log(
+          `Reservation confirmed for ${selectedDate?.format(
+            "MMMM D, YYYY"
+          )} at ${selectedTime}`
+        );
+      };
 
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -96,12 +129,13 @@ const Calender = () => {
           sx={{
             display: "flex",
             flexDirection: {
-                xs:"column",
-                sm:"row"},
+              xs: "column",
+              sm: "column",
+              md: "row",
+            },
             alignItems: "center",
             justifyContent: "center",
-            gap: {sm:"30px",xs:"1px"}
-            
+            gap: { sm: "30px", xs: "1px" },
           }}
         >
           <StaticDatePicker
@@ -116,14 +150,95 @@ const Calender = () => {
 
           {/* Time slot dropdown */}
           {selectedDate && (
-            <Box sx={{ display: "flex", flexDirection:"column" ,gap:2, alignItems: "center", marginTop: 1,justifyContent: "center" }}>
-              <FormControl sx={{ marginTop: 1, minWidth: 200 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                alignItems: "center",
+                marginTop: 1,
+                justifyContent: "center",
+              }}
+            >
+              <FormControl sx={{ marginTop: 1, minWidth: 300 }}>
+                <TextField
+                  id="outlined-controlled"
+                  label="Name"
+                  value={name}
+                  size="small"
+                  onChange={(event) => {
+                    setName(event.target.value);
+                  }}
+                />
+              </FormControl>
+              <FormControl sx={{ marginTop: 1, minWidth: 300 }}>
+                <TextField
+                  id="outlined-controlled"
+                  label="Email"
+                  value={email}
+                  size="small"
+                  type="email"
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                  }}
+                  error={email.length > 0 && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)}
+                  helperText={
+                  email.length > 0 && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
+                    ? 'Please enter a valid email address'
+                    : ''}
+                />
+              </FormControl>
+
+              <FormControl sx={{ marginTop: 1, minWidth: 300 }}>
+                <TextField
+                  id="outlined-controlled"
+                  label="Guest"
+                  value={guestNumber}
+                  type="number"
+                  size="small"
+                  onChange={(event) => {
+                    setGuestNumber(event.target.value);
+                  }}
+                  error={guestNumber < 2}
+                  helperText="Please enter atleast 2 guest "
+                  slotProps={{
+                    input: {
+                      inputProps: { min: 1, step: 1 }, // Ensures only whole numbers
+                    },
+                  }} // Ensures only whole numbers
+                />
+              </FormControl>
+
+              <FormControl sx={{ marginTop: 1, minWidth: 300 }}>
+                <TextField
+                  id="outlined-controlled"
+                  label="Phone"
+                  value={phoneNumber}
+                  type="tel"
+                  size="small"
+                  onChange={handlePhoneChange}
+                  error={phoneError}
+                  helperText={
+                    phoneError
+                      ? "Please enter a valid 10-digit phone number"
+                      : ""
+                  }
+                  slotProps={{
+                    input: {
+                      inputProps: { maxLength: 10 }, // Use slotProps.input to define maxLength
+                    },
+                  }}
+                />
+              </FormControl>
+
+              <FormControl sx={{ marginTop: 1, minWidth: 300 }}>
                 <InputLabel id="time-slot-label">Select Time</InputLabel>
                 <Select
                   labelId="time-slot-label"
                   value={selectedTime}
                   label="Select Time"
                   onChange={handleTimeChange}
+                  size="small"
                 >
                   {timeSlots.map((time, index) => (
                     <MenuItem key={index} value={time}>
@@ -138,7 +253,9 @@ const Calender = () => {
                 color="primary"
                 onClick={handleConfirm}
                 sx={{ marginLeft: 2 }}
-                disabled={!selectedTime}
+                disabled={
+                  !selectedTime || !name || !phoneNumber || !guestNumber
+                }
               >
                 Confirm
               </Button>
