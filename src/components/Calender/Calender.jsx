@@ -13,18 +13,21 @@ import "./Calender.css"
 import { Box, Button, FormControl,  InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useState } from "react";
 import dayjs from "dayjs";
+import axios from "axios";
 
 
 
 
 
 const timeSlots = [
-  "12:15 PM",
-  "1:30 PM",
-  "2:45 PM",
+  "3:00 PM",
   "4:00 PM",
+  "5:00 PM",
   "6:00 PM",
+  "7:00 PM",
   "8:00 PM",
+  "9:00 PM",
+  "10:00 PM",
 ];
 
 function CustomLayout(props) {
@@ -76,7 +79,7 @@ const Calender = () => {
     const [phoneNumber, setPhoneNumber] = useState("")
     const [phoneError, setPhoneError] = useState(false);
     const [email,setEmail] = useState("")
-    const [open, setOpen] = useState(false);
+
 
     const handleDateChange = (newDate) => {
       setSelectedDate(newDate);
@@ -86,10 +89,10 @@ const Calender = () => {
       setSelectedTime(event.target.value);
     };
 
-    
+
 
     const today = dayjs()
-    const oneMonthLater = today.add(1,'month')
+    const twoWeeksLater = today.add(2,'week')
 
       const validatePhoneNumber = (value) => {
         // Regular expression for a 10-digit phone number (you can customize it based on your format)
@@ -109,18 +112,19 @@ const Calender = () => {
         }
       };
 
-      //modal dialog
 
-      const handleOpen = () => setOpen(true);
-      const handleClose = () => setOpen(false);
 
-      const handleConfirm = () => {
-        // Add your confirmation logic here
-        console.log(
-          `Reservation confirmed for ${selectedDate?.format(
-            "MMMM D, YYYY"
-          )} at ${selectedTime}`
-        );
+
+      const handleConfirm = async () => {
+        const reservationData = {
+          name,
+          email,
+          guest:guestNumber,
+          phone:phoneNumber,
+          date:selectedDate.format("YYYY-MM-DD"),
+          time:selectedTime
+        }
+       await axios.post("http://localhost:8000/reservation",reservationData);
       };
 
     return (
@@ -142,7 +146,7 @@ const Calender = () => {
             value={selectedDate}
             onChange={handleDateChange}
             minDate={today}
-            maxDate={oneMonthLater}
+            maxDate={twoWeeksLater}
             slots={{
               layout: CustomLayout,
             }}
@@ -160,6 +164,7 @@ const Calender = () => {
                 justifyContent: "center",
               }}
             >
+              {/* Name */}
               <FormControl sx={{ marginTop: 1, minWidth: 300 }}>
                 <TextField
                   id="outlined-controlled"
@@ -208,7 +213,7 @@ const Calender = () => {
                   }} // Ensures only whole numbers
                 />
               </FormControl>
-
+              {/* Phone Number */}
               <FormControl sx={{ marginTop: 1, minWidth: 300 }}>
                 <TextField
                   id="outlined-controlled"
@@ -230,6 +235,7 @@ const Calender = () => {
                   }}
                 />
               </FormControl>
+              {/* Timeslots */}
 
               <FormControl sx={{ marginTop: 1, minWidth: 300 }}>
                 <InputLabel id="time-slot-label">Select Time</InputLabel>
