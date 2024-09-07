@@ -10,25 +10,13 @@ import {
 } from "@mui/x-date-pickers/PickersLayout";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import "./Calender.css"
-import { Box, Button, FormControl,  InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { useState } from "react";
+import { Box, Button, FormControl,  InputLabel, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
-
-
-
-const timeSlots = [
-  "3:00 PM",
-  "4:00 PM",
-  "5:00 PM",
-  "6:00 PM",
-  "7:00 PM",
-  "8:00 PM",
-  "9:00 PM",
-  "10:00 PM",
-];
 
 function CustomLayout(props) {
   const { toolbar, content} = usePickerLayout(props);
@@ -69,7 +57,18 @@ function CustomLayout(props) {
   );
 }
 
-
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  borderRadius: 5,
+  p: 4,
+};
 
 const Calender = () => {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -79,6 +78,55 @@ const Calender = () => {
     const [phoneNumber, setPhoneNumber] = useState("")
     const [phoneError, setPhoneError] = useState(false);
     const [email,setEmail] = useState("")
+    const [fetchedSlots, setFetchedSlots] = useState([]);
+    const [availableSlots,setAvailableSlots] = useState([])
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [reservationDetails, setReservationDetails] = useState(null);
+    const navigate = useNavigate();
+
+
+    //modal dialog
+
+
+//  fetch available slots
+    useEffect(() => {
+   const fetchSlots = async () => {
+     try {
+       const response = await axios.get(
+         "http://localhost:8000/available-slots"
+       );
+       setFetchedSlots(response.data); // Set the fetched slots data to state
+     } catch (error) {
+       console.error("Error fetching available slots:", error);
+     }
+   };
+
+   fetchSlots();
+ }, []);
+
+//  checks if atleast one slot is availble in the particulat date e.g {
+// "date": "2024-09-18",
+// "availableSlots": [ "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM" ] },
+
+    const shouldDisableDates = (date)=>{
+      const formattedDate = date.format('YYYY-MM-DD');
+
+      return !fetchedSlots?.some(slot=>formattedDate === slot.date )
+    }
+
+    //Handle selected dates
+
+    useEffect(() => {
+      if (selectedDate) {
+        const formattedDate = selectedDate.format("YYYY-MM-DD");
+        const selectedDateSlots =
+          fetchedSlots.find((slot) => slot.date === formattedDate)
+            ?.availableSlots || [];
+        setAvailableSlots(selectedDateSlots);
+      }
+    }, [selectedDate, fetchedSlots]);
 
 
     const handleDateChange = (newDate) => {
@@ -90,9 +138,8 @@ const Calender = () => {
     };
 
 
-
     const today = dayjs()
-    const twoWeeksLater = today.add(2,'week')
+    const twoWeeksLater = today.add(8,'week')
 
       const validatePhoneNumber = (value) => {
         // Regular expression for a 10-digit phone number (you can customize it based on your format)
@@ -112,9 +159,6 @@ const Calender = () => {
         }
       };
 
-
-
-
       const handleConfirm = async () => {
         const reservationData = {
           name,
@@ -124,8 +168,25 @@ const Calender = () => {
           date:selectedDate.format("YYYY-MM-DD"),
           time:selectedTime
         }
+        setReservationDetails(reservationData)
        await axios.post("http://localhost:8000/reservation",reservationData);
+      handleOpen ()
       };
+
+      const handleNewReservation = () => {
+        // Clear form and reset state
+        setName("");
+        setEmail("");
+        setGuestNumber(2);
+        setPhoneNumber("");
+        setSelectedDate(null);
+        setSelectedTime("");
+        handleClose();
+      };
+
+       const handleGoHome = () => {
+         navigate("/home"); // Redirect to home route
+       };
 
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -146,6 +207,7 @@ const Calender = () => {
             value={selectedDate}
             onChange={handleDateChange}
             minDate={today}
+            shouldDisableDate={shouldDisableDates}
             maxDate={twoWeeksLater}
             slots={{
               layout: CustomLayout,
@@ -186,11 +248,16 @@ const Calender = () => {
                   onChange={(event) => {
                     setEmail(event.target.value);
                   }}
-                  error={email.length > 0 && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)}
+                  error={
+                    email.length > 0 &&
+                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
+                  }
                   helperText={
-                  email.length > 0 && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
-                    ? 'Please enter a valid email address'
-                    : ''}
+                    email.length > 0 &&
+                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
+                      ? "Please enter a valid email address"
+                      : ""
+                  }
                 />
               </FormControl>
 
@@ -246,11 +313,17 @@ const Calender = () => {
                   onChange={handleTimeChange}
                   size="small"
                 >
-                  {timeSlots.map((time, index) => (
-                    <MenuItem key={index} value={time}>
-                      {time}
+                  {availableSlots.length > 0 ? (
+                    availableSlots.map((time, index) => (
+                      <MenuItem key={index} value={time}>
+                        {time}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="" disabled>
+                      No slots available
                     </MenuItem>
-                  ))}
+                  )}
                 </Select>
               </FormControl>
               {/* confirmbutton */}
@@ -268,6 +341,39 @@ const Calender = () => {
             </Box>
           )}
         </Box>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Booking Confirmation
+            </Typography>
+
+            {reservationDetails && (
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                <strong>Name:</strong> {reservationDetails.name} <br />
+                <strong>Email:</strong> {reservationDetails.email} <br />
+                <strong>Guests:</strong> {reservationDetails.guest} <br />
+                <strong>Date:</strong> {reservationDetails.date} <br />
+                <strong>Time:</strong> {reservationDetails.time}
+              </Typography>
+            )}
+
+            <Box
+              sx={{ mt: 3, display: "flex", justifyContent: "space-between" }}
+            >
+              <Button variant="outlined" size="md" onClick={handleNewReservation}>
+                Make Another Reservation
+              </Button>
+              <Button variant="contained" size="md" onClick={handleGoHome}>
+                Go to Home
+              </Button>
+            </Box>
+          </Box>
+        </Modal>
       </LocalizationProvider>
     );
 };
