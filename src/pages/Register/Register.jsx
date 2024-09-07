@@ -49,8 +49,17 @@ const Register = () => {
       alignItems="center"
       minHeight="100vh"
       bgcolor="#f4f6f8"
+      px={2} // Padding on smaller devices
     >
-      <Paper elevation={3} sx={{ padding: 4, maxWidth: 400, width: "100%" }}>
+      <Paper
+        elevation={3}
+        sx={{
+          padding: 4,
+          maxWidth: { xs: 350, sm: 400 }, // Responsive max width
+          width: "100%",
+          borderRadius: 2, // Rounded corners
+        }}
+      >
         <Typography variant="h4" align="center" mb={2} color="primary">
           Register Now
         </Typography>
@@ -96,16 +105,14 @@ const Register = () => {
             onChange={(e) => setPassword(e.target.value)}
             error={Boolean(errors.password)}
             helperText={errors.password}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={handleShowPassword}>
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              },
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleShowPassword}>
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
             }}
             sx={{ mb: 3 }}
           />
@@ -116,16 +123,16 @@ const Register = () => {
             fullWidth
             sx={{ padding: "10px", mb: 2 }}
           >
-            Log In
+            Register
           </Button>
         </form>
         <Typography variant="body2" align="center" color="textSecondary">
-          <p>Do not have an account?</p>
+          Already have an account?
           <a
-            href="/register"
-            style={{ color: "#3f51b5", textDecoration: "none" }}
+            href="/login"
+            style={{ color: "#3f51b5", textDecoration: "none",marginLeft: "5px" }}
           >
-            Sign up
+            Log in
           </a>
         </Typography>
       </Paper>
