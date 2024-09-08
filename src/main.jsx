@@ -6,10 +6,12 @@ import { RouterProvider } from 'react-router-dom'
 import router from './routes/Routes.jsx'
 import { ThemeProvider } from '@mui/material'
 import theme from './theme/theme.js'
+import { Toaster } from 'react-hot-toast'
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
+      <Toaster />
       <RouterProvider router={router} />
     </ThemeProvider>
   </StrictMode>
