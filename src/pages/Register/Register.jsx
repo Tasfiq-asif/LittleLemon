@@ -105,7 +105,7 @@ const Register = () => {
             onChange={(e) => setPassword(e.target.value)}
             error={Boolean(errors.password)}
             helperText={errors.password}
-            InputProps={{
+            slotProps={{input:{
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton onClick={handleShowPassword}>
@@ -113,7 +113,7 @@ const Register = () => {
                   </IconButton>
                 </InputAdornment>
               ),
-            }}
+            }}}
             sx={{ mb: 3 }}
           />
           <Button

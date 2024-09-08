@@ -3,17 +3,19 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#4CAF50', // Primary Green
+      main: '#495F57', // Primary Green
     },
     secondary: {
-      main: '#FFEB3B', // Secondary Yellow
+      main: '#FACC14', // Secondary Yellow
     },
     background: {
-      default: '#FFFDE7', // Warm Beige/White
+      default: '#f4f6f8',
+       // Warm Beige/White
     },
     text: {
-      primary: '#388E3C', // Dark Green for text
-      secondary: '#4CAF50', // Light text option if needed
+        primary: '#333333', // Dark Green for text
+      secondary: '#666666',
+      heading:'#FACC14'// Light text option if needed
     },
   },
   typography: {
@@ -23,7 +25,8 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          color: '#FFFFFF', // Set button text color to white
+          color: '#FFFFFF',
+          background:'#FACC14' // Set button text color to white
         },
       },
     },
