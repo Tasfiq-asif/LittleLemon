@@ -7,12 +7,15 @@ import router from './routes/Routes.jsx'
 import { ThemeProvider } from '@mui/material'
 import theme from './theme/theme.js'
 import { Toaster } from 'react-hot-toast'
+import AuthProviders from './providers/AuthProviders.jsx'
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <Toaster />
-      <RouterProvider router={router} />
+      <AuthProviders>
+        <Toaster />
+        <RouterProvider router={router} />
+      </AuthProviders>
     </ThemeProvider>
   </StrictMode>
 );
