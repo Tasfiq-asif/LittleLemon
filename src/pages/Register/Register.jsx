@@ -24,10 +24,10 @@ const Register = () => {
 
   const handleShowPassword = () => setShowPassword(!showPassword);
 
-  const {  signInWithGoogle,createUser, loading, user,updateuserProfile } = useAuth();
+  const {  signInWithGoogle,createUser, loading, user,updateuserProfile,logOut } = useAuth();
   const location = useLocation()
 
-  const from = location.state?.from
+  const from = location.state?.from || '/'
 
   const handleGoogleSignIn = async () => {
     try {
@@ -51,13 +51,27 @@ const Register = () => {
     return Object.values(tempErrors).every((error) => error === "");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (validate()) {
-      // Handle successful login (API call, redirect, etc.)
-     createUser(email,password)
+      try {
+        await createUser(email, password);
+        toast.success("User created successfully");
+
+        // Check if logOut is being called and if it returns an error
+        console.log("Attempting to log out...");
+        await logOut();
+        console.log("Logout successful.");
+
+        navigate("/login");
+      } catch (err) {
+        toast.error(err?.message);
+        console.error("Error during logout:", err); // Log the error
+      }
     }
   };
+
+
   return (
     <Box
       display="flex"

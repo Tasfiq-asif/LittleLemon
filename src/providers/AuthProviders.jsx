@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStat
 import PropTypes from "prop-types";
 import axios from "axios";
 import { app } from "../firebase/firebaseConfig";
+import toast from "react-hot-toast";
 
 export const AuthContext = createContext(null)
 const auth = getAuth(app);
@@ -15,7 +16,7 @@ const AuthProviders = ({children}) => {
     //handle user Login
     const createUser = (email,password) =>{
         setLoading(true)
-        createUserWithEmailAndPassword(auth, email, password)
+       return createUserWithEmailAndPassword(auth, email, password)
     }
 
     const signIn = (email,password) =>{
@@ -33,13 +34,29 @@ const AuthProviders = ({children}) => {
         return sendPasswordResetEmail(auth, email)
     }
 
-    const logOut = async () =>{
-        setLoading(true)
+    // const logOut = async () =>{
+    //     setLoading(true)
+    //     // await axios.get(`${import.meta.env.VITE_API_URL}/logout`,{
+    //     //     withCredentials:true,
+    //     // })
+    //     return signOut(auth)
+    // }
+    const logOut = async () => {
+      setLoading(true);
+      try {
         // await axios.get(`${import.meta.env.VITE_API_URL}/logout`,{
         //     withCredentials:true,
         // })
-        return signOut(auth)
-    }
+        return await signOut(auth);
+        // Returning the promise so it can be awaited elsewhere
+      } catch (error) {
+        toast.error("Logout failed");
+        throw error; // Re-throw the error if needed for further handling
+      } finally {
+        setLoading(false); // Ensure loading is set to false after the process
+      }
+    };
+
 
     const updateUserProfile = (name,phone) =>{
         return (auth.currentUser,{displayName:name,phone:phone})
