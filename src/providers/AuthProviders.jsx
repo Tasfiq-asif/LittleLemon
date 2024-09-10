@@ -35,10 +35,10 @@ const AuthProviders = ({children}) => {
 
     const logOut = async () =>{
         setLoading(true)
-        await axios.get(`${import.meta.env.VITE_API_URL}/logout`,{
-            withCredentials:true,
-        })
-        return signOut()
+        // await axios.get(`${import.meta.env.VITE_API_URL}/logout`,{
+        //     withCredentials:true,
+        // })
+        return signOut(auth)
     }
 
     const updateUserProfile = (name,phone) =>{

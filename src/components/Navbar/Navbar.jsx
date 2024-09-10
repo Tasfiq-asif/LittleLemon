@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -15,11 +15,14 @@ import {
   Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { user, loading, logOut } = useAuth();
+  const navigate =useNavigate()
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -30,9 +33,16 @@ const Navbar = () => {
     { href: "/about", label: "About" },
     { href: "/order", label: "Order Online" },
     { href: "/reserve", label: "Reservation" },
-    { href: "/login", label: "Login" },
+
   ];
 
+  const handleAuthAction = () => {
+    if (user) {
+      logOut(); // Call the logout function when user is authenticated
+    } else {
+      navigate("/login"); // Navigate to the login page if not authenticated
+    }
+  };
   return (
     <>
       <AppBar
@@ -76,6 +86,7 @@ const Navbar = () => {
                       {route.label}
                     </NavLink>
                   ))}
+                   <Button onClick={handleAuthAction}>{user?"LogOut":"LogIn"}</Button>
                 </Box>
               ) : (
                 <IconButton
@@ -89,7 +100,6 @@ const Navbar = () => {
                 </IconButton>
               )}
             </nav>
-            <Button>Logout</Button>
           </div>
         </Toolbar>
       </AppBar>
@@ -117,6 +127,16 @@ const Navbar = () => {
                 <ListItemText primary={route.label} />
               </ListItem>
             ))}
+
+            {!loading && (
+              <ListItem
+                button
+                onClick={handleAuthAction} // Handle the login/logout action
+                key={user ? "Logout" : "Login"}
+              >
+                <ListItemText primary={user ? "Logout" : "Login"} />
+              </ListItem>
+            )}
           </List>
         </Box>
       </Drawer>

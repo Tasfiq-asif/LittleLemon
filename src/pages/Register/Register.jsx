@@ -9,7 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Google, Visibility, VisibilityOff } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 
@@ -24,7 +24,10 @@ const Register = () => {
 
   const handleShowPassword = () => setShowPassword(!showPassword);
 
-  const { signIn, signInWithGoogle, loading, user,updateuserProfile } = useAuth();
+  const {  signInWithGoogle,createUser, loading, user,updateuserProfile } = useAuth();
+  const location = useLocation()
+
+  const from = location.state?.from
 
   const handleGoogleSignIn = async () => {
     try {
@@ -52,8 +55,7 @@ const Register = () => {
     event.preventDefault();
     if (validate()) {
       // Handle successful login (API call, redirect, etc.)
-      console.log({ email, password });
-      navigate("/dashboard"); // Optional, redirect to dashboard or other page
+     createUser(email,password)
     }
   };
   return (
