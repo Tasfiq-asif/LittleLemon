@@ -8,8 +8,10 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Google, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -21,6 +23,18 @@ const Register = () => {
   const navigate = useNavigate(); // Optional
 
   const handleShowPassword = () => setShowPassword(!showPassword);
+
+  const { signIn, signInWithGoogle, loading, user,updateuserProfile } = useAuth();
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+      toast.success("Sign In Successful");
+      navigate(from);
+    } catch (err) {
+      toast.error(err?.message);
+    }
+  };
 
   // Basic validation
   const validate = () => {
@@ -105,15 +119,17 @@ const Register = () => {
             onChange={(e) => setPassword(e.target.value)}
             error={Boolean(errors.password)}
             helperText={errors.password}
-            slotProps={{input:{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleShowPassword}>
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}}
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleShowPassword}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
+            }}
             sx={{ mb: 3 }}
           />
           <Button
@@ -126,11 +142,34 @@ const Register = () => {
             Register
           </Button>
         </form>
+
+        <Button
+          type="button"
+          variant="contained"
+          color="secondary"
+          fullWidth
+          sx={{
+            padding: "10px",
+            mb: 2,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={handleGoogleSignIn}
+        >
+          <Google sx={{ mr: 1 }} />
+          Sign In with Google
+        </Button>
+
         <Typography variant="body2" align="center" color="textSecondary">
           Already have an account?
           <a
             href="/login"
-            style={{ color: "#3f51b5", textDecoration: "none",marginLeft: "5px" }}
+            style={{
+              color: "#3f51b5",
+              textDecoration: "none",
+              marginLeft: "5px",
+            }}
           >
             Log in
           </a>

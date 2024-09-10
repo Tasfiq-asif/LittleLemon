@@ -12,6 +12,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -54,39 +55,42 @@ const Navbar = () => {
               Little Lemon
             </NavLink>
           </Typography>
-          <nav>
-            {!isMobile ? (
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                {routes.map((route) => (
-                  <NavLink
-                    key={route.label}
-                    to={route.href}
-                    style={({ isActive }) => ({
-                      color: isActive
-                        ? theme.palette.secondary.main
-                        : theme.palette.text.primary,
-                      textDecoration: isActive ? "underline" : "none",
-                      margin: theme.spacing(0, 2),
-                      padding: theme.spacing(1),
-                      fontWeight: "500",
-                    })}
-                  >
-                    {route.label}
-                  </NavLink>
-                ))}
-              </Box>
-            ) : (
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                onClick={handleDrawerToggle}
-                sx={{ display: { xs: "block", sm: "none" },color: "black"}}
-              >
-                <MenuIcon  />
-              </IconButton>
-            )}
-          </nav>
+          <div className="flex justify-between">
+            <nav>
+              {!isMobile ? (
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  {routes.map((route) => (
+                    <NavLink
+                      key={route.label}
+                      to={route.href}
+                      style={({ isActive }) => ({
+                        color: isActive
+                          ? theme.palette.secondary.main
+                          : theme.palette.text.primary,
+                        textDecoration: isActive ? "underline" : "none",
+                        margin: theme.spacing(0, 2),
+                        padding: theme.spacing(1),
+                        fontWeight: "500",
+                      })}
+                    >
+                      {route.label}
+                    </NavLink>
+                  ))}
+                </Box>
+              ) : (
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={handleDrawerToggle}
+                  sx={{ display: { xs: "block", sm: "none" }, color: "black" }}
+                >
+                  <MenuIcon />
+                </IconButton>
+              )}
+            </nav>
+            <Button>Logout</Button>
+          </div>
         </Toolbar>
       </AppBar>
 

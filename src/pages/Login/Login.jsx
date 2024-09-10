@@ -33,6 +33,8 @@ const Login = () => {
     }
   }, [user, navigate, from]);
 
+
+
   // Basic validation
   const validate = () => {
     let tempErrors = {};
