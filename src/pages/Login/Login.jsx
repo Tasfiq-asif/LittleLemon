@@ -13,6 +13,7 @@ import { Google, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { axiosPublic } from "../../hooks/useAxiosPublic";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -45,15 +46,21 @@ const Login = () => {
     return Object.values(tempErrors).every((error) => error === "");
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      await signInWithGoogle();
-      toast.success("Sign In Successful");
-      navigate(from);
-    } catch (err) {
-      toast.error(err?.message);
-    }
-  };
+   const handleGoogleSignIn = async () => {
+     try {
+       const result = await signInWithGoogle();
+       const userInfo = {
+         email: result.user?.email,
+         name: result.user?.displayName,
+         role: "guest",
+       };
+       await axiosPublic.post("/user", userInfo);
+       toast.success("Sign In Successful");
+       navigate(from);
+     } catch (err) {
+       toast.error(err?.message);
+     }
+   };
 
   const handleSubmit = (event) => {
     event.preventDefault();

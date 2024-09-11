@@ -27,7 +27,14 @@ const Register = () => {
 
   const handleShowPassword = () => setShowPassword(!showPassword);
 
-  const {  signInWithGoogle,createUser, loading, user,updateuserProfile,logOut } = useAuth();
+  const {
+    signInWithGoogle,
+    createUser,
+    loading,
+    user,
+    updateUserProfile,
+    logOut,
+  } = useAuth();
   const location = useLocation()
 
   const from = location.state?.from || '/'
@@ -35,7 +42,7 @@ const Register = () => {
   const handleGoogleSignIn = async () => {
     try {
       const result =await signInWithGoogle();
-      const userInfo = {email: result.user?.email, name: result.user?.displayName}
+      const userInfo = {email: result.user?.email, name: result.user?.displayName,role:'guest'}
       await axiosPublic.post('/user',userInfo)
       toast.success("Sign In Successful");
       navigate(from);
@@ -61,13 +68,16 @@ const Register = () => {
     if (validate()) {
       try {
         await createUser(email, password);
-        toast.success("User created successfully");
-
-        // Check if logOut is being called and if it returns an error
-        console.log("Attempting to log out...");
+        updateUserProfile(name);
+        const userInfo = {
+          email: email,
+          name: name,
+          phone: phone,
+          role: 'guest'
+        };
+        await axiosPublic.post("/user", userInfo);
         await logOut();
-        console.log("Logout successful.");
-
+        toast.success("User created successfully");
         navigate("/login");
       } catch (err) {
         toast.error(err?.message);
@@ -75,6 +85,7 @@ const Register = () => {
       }
     }
   };
+
 
 
   return (

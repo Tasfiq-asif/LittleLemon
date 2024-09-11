@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { app } from "../firebase/firebaseConfig";
@@ -34,13 +34,9 @@ const AuthProviders = ({children}) => {
         return sendPasswordResetEmail(auth, email)
     }
 
-    // const logOut = async () =>{
-    //     setLoading(true)
-    //     // await axios.get(`${import.meta.env.VITE_API_URL}/logout`,{
-    //     //     withCredentials:true,
-    //     // })
-    //     return signOut(auth)
-    // }
+   
+
+
     const logOut = async () => {
       setLoading(true);
       try {
@@ -58,9 +54,18 @@ const AuthProviders = ({children}) => {
     };
 
 
-    const updateUserProfile = (name,phone) =>{
-        return (auth.currentUser,{displayName:name,phone:phone})
-    }
+
+
+   const updateUserProfile = (name) => {
+     const currentUser = auth.currentUser;
+     if (currentUser) {
+       // Update both displayName and phoneNumber in the profile
+       return updateProfile(currentUser, {
+         displayName: name,
+       });
+     }
+   };
+
 
     const getToken = async email =>{
         const { data } = await axios.post(

@@ -23,7 +23,7 @@ const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { user, loading, logOut } = useAuth();
   const navigate =useNavigate()
-  console.log(user)
+
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -45,6 +45,7 @@ const Navbar = () => {
       navigate("/login"); // Navigate to the login page if not authenticated
     }
   };
+  console.log(user)
   return (
     <>
       <AppBar
