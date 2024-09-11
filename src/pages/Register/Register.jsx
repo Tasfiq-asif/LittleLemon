@@ -12,6 +12,8 @@ import { Google, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import axios from "axios";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -21,6 +23,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate(); // Optional
+  const axiosPublic = useAxiosPublic()
 
   const handleShowPassword = () => setShowPassword(!showPassword);
 
@@ -31,7 +34,9 @@ const Register = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
+      const result =await signInWithGoogle();
+      const userInfo = {email: result.user?.email, name: result.user?.displayName}
+      await axiosPublic.post('/user',userInfo)
       toast.success("Sign In Successful");
       navigate(from);
     } catch (err) {
