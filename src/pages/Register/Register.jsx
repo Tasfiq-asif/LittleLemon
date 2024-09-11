@@ -12,7 +12,7 @@ import { Google, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
-import axios from "axios";
+
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Register = () => {
@@ -30,8 +30,6 @@ const Register = () => {
   const {
     signInWithGoogle,
     createUser,
-    loading,
-    user,
     updateUserProfile,
     logOut,
   } = useAuth();
