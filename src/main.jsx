@@ -8,14 +8,17 @@ import { ThemeProvider } from '@mui/material'
 import theme from './theme/theme.js'
 import { Toaster } from 'react-hot-toast'
 import AuthProviders from './providers/AuthProviders.jsx'
+import { CartProvider } from './providers/CartProvider.jsx'
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <AuthProviders>
-        <Toaster />
-        <RouterProvider router={router} />
-      </AuthProviders>
-    </ThemeProvider>
+    <CartProvider>
+      <ThemeProvider theme={theme}>
+        <AuthProviders>
+          <Toaster />
+          <RouterProvider router={router} />
+        </AuthProviders>
+      </ThemeProvider>
+    </CartProvider>
   </StrictMode>
 );

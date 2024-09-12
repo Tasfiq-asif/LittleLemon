@@ -1,6 +1,6 @@
-import React from "react";
+
 import { NavLink, Outlet } from "react-router-dom";
-import { Container, Typography, Box, Stack } from "@mui/material";
+import {  Typography, Box, Stack } from "@mui/material";
 import { styled } from "@mui/system";
 
 // Styled components for the side panel and links

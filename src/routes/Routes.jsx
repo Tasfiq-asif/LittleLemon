@@ -7,6 +7,7 @@ import Register from "../pages/Register/Register";
 import Dashboard from "../layout/Dashboard";
 import ReservationRequest from "../pages/ReservationRequest/ReservationRequest";
 import AddItem from "../pages/AddItem/AddItem";
+import Order from "../pages/Order/Order";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             {
                 path: '/register',
                 element:<Register/>
+            },
+            {
+                path: '/order',
+                element:<Order/>
             },
         ]
     },
