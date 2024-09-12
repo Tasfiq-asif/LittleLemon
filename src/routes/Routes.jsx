@@ -8,6 +8,7 @@ import Dashboard from "../layout/Dashboard";
 import ReservationRequest from "../pages/ReservationRequest/ReservationRequest";
 import AddItem from "../pages/AddItem/AddItem";
 import Order from "../pages/Order/Order";
+import Cart from "../pages/Cart/Cart";
 
 const router = createBrowserRouter([
     {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
             {
                 path: '/order',
                 element:<Order/>
+            },
+            {
+                path: '/cart',
+                element:<Cart/>
             },
         ]
     },
