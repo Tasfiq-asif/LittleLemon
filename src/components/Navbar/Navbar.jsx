@@ -13,9 +13,21 @@ import {
   ListItem,
   ListItemText,
   Button,
+  styled,
+  Badge,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import useAuth from "../../hooks/useAuth";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
 
 const Navbar = () => {
   const theme = useTheme();
@@ -89,7 +101,9 @@ const Navbar = () => {
                       {route.label}
                     </NavLink>
                   ))}
-                   <Button onClick={handleAuthAction}>{user?"LogOut":"LogIn"}</Button>
+                  <Button onClick={handleAuthAction}>
+                    {user ? "LogOut" : "LogIn"}
+                  </Button>
                 </Box>
               ) : (
                 <IconButton
@@ -103,6 +117,12 @@ const Navbar = () => {
                 </IconButton>
               )}
             </nav>
+            {/* Cart */}
+            <IconButton aria-label="cart">
+              <StyledBadge badgeContent={4} color="secondary">
+                <ShoppingCartIcon />
+              </StyledBadge>
+            </IconButton>
           </div>
         </Toolbar>
       </AppBar>
