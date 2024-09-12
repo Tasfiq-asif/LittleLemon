@@ -19,6 +19,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import useAuth from "../../hooks/useAuth";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useCart } from "../../providers/CartProvider";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -35,6 +36,7 @@ const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { user, loading, logOut } = useAuth();
   const navigate =useNavigate()
+  const {cart} =useCart()
 
 
   const handleDrawerToggle = () => {
@@ -57,7 +59,7 @@ const Navbar = () => {
       navigate("/login"); // Navigate to the login page if not authenticated
     }
   };
-  console.log(user)
+
   return (
     <>
       <AppBar
@@ -119,7 +121,7 @@ const Navbar = () => {
             </nav>
             {/* Cart */}
             <IconButton aria-label="cart">
-              <StyledBadge badgeContent={4} color="secondary">
+              <StyledBadge badgeContent={cart.reduce((acc,item)=> acc+item.quantity,0)} color="secondary">
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>
