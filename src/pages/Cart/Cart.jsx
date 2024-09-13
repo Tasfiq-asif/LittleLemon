@@ -158,7 +158,7 @@ const Cart = () => {
 
             }}
           >
-            Confirm Order
+            Proceed
           </Button>
         </Box>
       </Box>

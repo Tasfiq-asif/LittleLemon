@@ -78,7 +78,8 @@ const Order = () => {
                 >
                   ${menuitem.price}
                 </Typography>
-                {cart.find((cartItem) => cartItem._id === menuitem._id) ? (
+
+                {cart.length>0 && cart.find((cartItem) => cartItem._id === menuitem._id) ? (
                   <Box
                     mt={2}
                     display={"flex"}
