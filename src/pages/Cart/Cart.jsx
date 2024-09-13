@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useCart } from "../../providers/CartProvider";
-import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, IconButton, TextField, Typography } from "@mui/material";
 import { Delete, ShoppingCart } from "@mui/icons-material";
 
 
@@ -23,7 +23,7 @@ const Cart = () => {
           });
         }
       };
-
+console.log(cart)
 
     return (
       <Box
@@ -38,11 +38,11 @@ const Cart = () => {
             sm: "column", // Column direction for small (tablet) screens
             md: "row", // Row direction for medium (desktop) screens and above
           },
-          gap:{
+          gap: {
             xs: 6,
             sm: 6,
-            md:0
-          }
+            md: 0,
+          },
         }}
       >
         {/* Cart Section */}
@@ -77,7 +77,8 @@ const Cart = () => {
                     {item.name}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    Quantity: {item.quantity}
+                    Cost: {item.quantity}
+                    X ${item.price}
                   </Typography>
                 </Box>
                 <IconButton
@@ -93,6 +94,7 @@ const Cart = () => {
               Your cart is empty.
             </Typography>
           )}
+        <Divider />
         </Box>
 
         {/* Order Details Section */}
@@ -155,7 +157,6 @@ const Cart = () => {
               fontSize: "1rem",
               textTransform: "none",
               fontWeight: "bold",
-
             }}
           >
             Proceed
