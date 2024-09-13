@@ -120,7 +120,7 @@ const Navbar = () => {
               )}
             </nav>
             {/* Cart */}
-            <IconButton aria-label="cart">
+            <IconButton aria-label="cart" onClick={()=>navigate('/cart')}>
               <StyledBadge badgeContent={cart.reduce((acc,item)=> acc+item.quantity,0)} color="secondary">
                 <ShoppingCartIcon />
               </StyledBadge>

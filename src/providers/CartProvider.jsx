@@ -43,9 +43,15 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  const getItemQuantityCount = (item) =>{
+    const cartItemIsExist =  cart.find(cartItem => cartItem.name === item.name)
+
+    return cartItemIsExist ? cartItemIsExist.quantity : 0;
+  }
+
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, updateQuantity, removeFromCart }}
+      value={{ cart, addToCart, updateQuantity, removeFromCart,getItemQuantityCount }}
     >
       {children}
     </CartContext.Provider>

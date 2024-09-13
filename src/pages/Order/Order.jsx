@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const Order = () => {
     const [menuItems,setmenuItems] = useState([])
-    const { cart, addToCart, updateQuantity } = useCart();
+    const { cart, addToCart, updateQuantity, getItemQuantityCount } = useCart();
     const navigate = useNavigate();
 
 
@@ -33,7 +33,7 @@ const Order = () => {
         }
     }
 
-
+console.log(cart)
     return (
       <Box sx={{ p: 4, backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
         <Typography
@@ -78,8 +78,21 @@ const Order = () => {
                 >
                   ${menuitem.price}
                 </Typography>
+                <Button
+                  onClick={() => addToCart(menuitem)}
+                  variant="contained"
+                  startIcon={<ShoppingCart />}
+                  sx={{
+                    mt: 2,
+                    borderRadius: 4,
+                    textTransform: "none",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Add to Cart{getItemQuantityCount(menuitem) > 0 && <p className="ml-2">{getItemQuantityCount(menuitem)}</p>}
+                </Button>
 
-                {cart.length>0 && cart.find((cartItem) => cartItem._id === menuitem._id) ? (
+                {/* {cart.length>0 && cart.find((cartItem) => cartItem._id === menuitem._id) ? (
                   <Box
                     mt={2}
                     display={"flex"}
@@ -131,9 +144,9 @@ const Order = () => {
                       fontWeight: "bold",
                     }}
                   >
-                    Add to Cart
+                    Add to Cart {menuitem>0?<>{menuitem.quantity}</>:<></>}
                   </Button>
-                )}
+                )} */}
               </CardContent>
             </Card>
           ))}
