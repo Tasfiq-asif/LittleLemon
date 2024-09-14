@@ -1,4 +1,5 @@
-import  { createContext, useState, useContext } from "react";
+import PropTypes from "prop-types";
+import { createContext, useState, useContext } from "react";
 
 // Create Cart Context
 const CartContext = createContext();
@@ -43,17 +44,30 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  const getItemQuantityCount = (item) =>{
-    const cartItemIsExist =  cart.find(cartItem => cartItem.name === item.name)
+  const getItemQuantityCount = (item) => {
+    const cartItemIsExist = cart.find(
+      (cartItem) => cartItem.name === item.name
+    );
 
     return cartItemIsExist ? cartItemIsExist.quantity : 0;
-  }
+  };
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, updateQuantity, removeFromCart,getItemQuantityCount }}
+      value={{
+        cart,
+        addToCart,
+        updateQuantity,
+        removeFromCart,
+        getItemQuantityCount,
+      }}
     >
       {children}
     </CartContext.Provider>
   );
+};
+
+// PropTypes validation
+CartProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

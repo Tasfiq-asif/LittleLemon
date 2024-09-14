@@ -1,28 +1,35 @@
 import { useState } from "react";
 import { useCart } from "../../providers/CartProvider";
-import { Box, Button, Divider, IconButton, TextField, Typography } from "@mui/material";
-import { Add, Delete, Remove, ShoppingCart } from "@mui/icons-material";
+import { Box, Button, Divider,  TextField, Typography } from "@mui/material";
+import {  ShoppingCart } from "@mui/icons-material";
+import CartCard from "../../components/CartCard/CartCard";
+import OrderConfirmationModal from "../../components/OrderConfirmationModal/OrderConfirmationModal";
 
 
 const Cart = () => {
-    const { cart, removeFromCart,updateQuantity } = useCart();
+    const { cart, removeFromCart,updateQuantity,getItemQuantityCount } = useCart();
       const [name, setName] = useState("");
       const [email, setEmail] = useState("");
       const [phone, setPhone] = useState("");
       const [address, setAddress] = useState("");
+      const [modalOpen, setModalOpen] = useState(false);
 
-      const handleOrder = () => {
-        if (name && email && phone && address) {
-          // Submit the order
-          console.log("Order confirmed!", {
-            cart,
-            name,
-            email,
-            phone,
-            address,
-          });
-        }
-      };
+
+
+
+  
+      // const handleOrder = () => {
+      //   if (name && email && phone && address) {
+      //     // Submit the order
+      //     console.log("Order confirmed!", {
+      //       cart,
+      //       name,
+      //       email,
+      //       phone,
+      //       address,
+      //     });
+      //   }
+      // };
       const handleQuantityChange = (item, increment) => {
         const existingItem = cart.find((cartItem) => cartItem._id === item._id);
         if (existingItem) {
@@ -34,6 +41,23 @@ const Cart = () => {
           }
         }
       };
+
+      const orderItems = cart.map((cartItem) =>({
+          itemId: cartItem._id,
+          itemName: cartItem.name,
+          itemPrice: cartItem.price,
+          quantity:getItemQuantityCount(cartItem),
+        }))
+
+      const totalPrice = cart.reduce((total,item) => total + item.price * getItemQuantityCount(item),0)
+
+
+        const userData = { name, email, phone, address };
+
+        const orderData = { orderItems ,totalPrice};
+
+        console.log(orderData)
+
 
     return (
       <Box
@@ -67,87 +91,12 @@ const Cart = () => {
           </Typography>
           {cart.length > 0 ? (
             cart.map((item) => (
-              <Box
+              <CartCard
                 key={item._id}
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                mb={2}
-                p={2}
-                boxShadow={1}
-                borderRadius={2}
-                bgcolor="#f1f1f1"
-              >
-                {/* Image Section */}
-                <Box display={"flex"} gap={2}>
-                  <Box
-                    component="img"
-                    src={item.imageUrl}
-                    alt={item.name}
-                    sx={{
-                      width: 100,
-                      height: 100,
-                      objectFit: "cover",
-                      borderRadius: 2,
-                      mr: 2,
-                    }}
-                  />
-
-                  {/* Text section */}
-                  <Box>
-                    <Typography
-                      variant="h6"
-                      fontWeight="bold"
-                      color="textPrimary"
-                    >
-                      {item.name}
-                    </Typography>
-
-                    {/* Changing Item amount */}
-                    <Box
-                      mt={2}
-                      display={"flex"}
-                      alignItems={"center"}
-                      justifyContent={"start"}
-                      gap={1}
-                    >
-                      <Typography variant="body1" fontWeight="bold">
-                        Number of items:
-                      </Typography>
-                      <IconButton
-                        onClick={() => handleQuantityChange(item, -1)}
-                        color="primary"
-                      >
-                        <Remove />
-                      </IconButton>
-
-                      <Typography variant="body1" fontWeight="bold">
-                        {item.quantity}
-                      </Typography>
-
-                      <IconButton
-                        onClick={() => handleQuantityChange(item, 1)}
-                        color="primary"
-                      >
-                        <Add />
-                      </IconButton>
-                    </Box>
-
-                    {/* Total Cost per Item */}
-                    <Typography variant="body2" color="textSecondary" mt={1}>
-                      Cost: {item.quantity} x ${item.price} = $
-                      {item.price * item.quantity}
-                    </Typography>
-                  </Box>
-                </Box>
-
-                <IconButton
-                  color="error"
-                  onClick={() => removeFromCart(item._id)}
-                >
-                  <Delete />
-                </IconButton>
-              </Box>
+                item={item}
+                handleQuantityChange={handleQuantityChange}
+                removeFromCart={removeFromCart}
+              />
             ))
           ) : (
             <Typography variant="body1" color="textSecondary" mt={4}>
@@ -232,7 +181,7 @@ const Cart = () => {
             variant="contained"
             fullWidth
             disabled={!name || !email || !phone || !address}
-            onClick={handleOrder}
+            onClick={()=>setModalOpen(true)}
             sx={{
               mt: 4,
               py: 1.5,
@@ -244,6 +193,13 @@ const Cart = () => {
             Proceed
           </Button>
         </Box>
+        {/* Order Confirmation Modal */}
+        <OrderConfirmationModal
+          open={modalOpen}
+          handleClose={() => setModalOpen(false)}
+          orderData={orderData}
+          userData={userData}
+        />
       </Box>
     );
 };

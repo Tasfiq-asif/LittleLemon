@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { axiosPublic } from "../../hooks/useAxiosPublic";
 import { useCart } from "../../providers/CartProvider";
-import { Box, Button, Card, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
-import { Add, Remove, ShoppingCart } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { Box, Button, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { ShoppingCart } from "@mui/icons-material";
+
+
 
 
 const Order = () => {
     const [menuItems,setmenuItems] = useState([])
-    const { cart, addToCart, updateQuantity, getItemQuantityCount } = useCart();
-    const navigate = useNavigate();
+    const { cart, addToCart, getItemQuantityCount } = useCart();
+
 
 
     useEffect(()=>{
@@ -21,17 +22,6 @@ const Order = () => {
     }
     ,[])
 
-    const handleQuantityChange = (item,increment) => {
-        const existingItem = cart.find(cartItem=> cartItem._id === item._id)
-        if (existingItem){
-            const newQuantity = existingItem.quantity +increment
-            if (newQuantity > 0){
-                updateQuantity(item._id,newQuantity)
-            }else{
-                updateQuantity(item._id,0)
-            }
-        }
-    }
 
 console.log(cart)
     return (
@@ -91,62 +81,6 @@ console.log(cart)
                 >
                   Add to Cart{getItemQuantityCount(menuitem) > 0 && <p className="ml-2">{getItemQuantityCount(menuitem)}</p>}
                 </Button>
-
-                {/* {cart.length>0 && cart.find((cartItem) => cartItem._id === menuitem._id) ? (
-                  <Box
-                    mt={2}
-                    display={"flex"}
-                    alignItems={"center"}
-                    justifyContent={"center"}
-                    gap={1}
-                  >
-                    <IconButton
-                      onClick={() => handleQuantityChange(menuitem, -1)}
-                      color="primary"
-                    >
-                      <Remove />
-                    </IconButton>
-                    <Typography variant="body1" fontWeight={"bold"}>
-                      {
-                        cart.find((cartItem) => cartItem._id === menuitem._id)
-                          .quantity
-                      }
-                    </Typography>
-                    <IconButton
-                      onClick={() => handleQuantityChange(menuitem, 1)}
-                      color="primary"
-                    >
-                      <Add />
-                    </IconButton>
-                    <Button
-                     onClick={() => navigate('/cart')}
-                      variant="contained"
-                      startIcon={<ShoppingCart />}
-                      sx={{
-                        mt: 2,
-                        borderRadius: 4,
-                        textTransform: "none",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Go to Cart
-                    </Button>
-                  </Box>
-                ) : (
-                  <Button
-                    onClick={() => addToCart(menuitem)}
-                    variant="contained"
-                    startIcon={<ShoppingCart />}
-                    sx={{
-                      mt: 2,
-                      borderRadius: 4,
-                      textTransform: "none",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Add to Cart {menuitem>0?<>{menuitem.quantity}</>:<></>}
-                  </Button>
-                )} */}
               </CardContent>
             </Card>
           ))}
