@@ -60,6 +60,7 @@ export const CartProvider = ({ children }) => {
         updateQuantity,
         removeFromCart,
         getItemQuantityCount,
+        setCart,
       }}
     >
       {children}

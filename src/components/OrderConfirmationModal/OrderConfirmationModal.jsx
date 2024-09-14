@@ -8,7 +8,7 @@ import withReactContent from "sweetalert2-react-content";
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
 
 const MySwal = withReactContent(Swal);
-const OrderConfirmationModal = ({ open, handleClose, userData, orderData }) => {
+const OrderConfirmationModal = ({ open, handleClose, userData, orderData,setCart,setName,setEmail,setAddress,setPhone }) => {
   const [loading, setLoading] = useState(false);
 
  const saveUserMutation = useMutation({
@@ -31,6 +31,11 @@ const OrderConfirmationModal = ({ open, handleClose, userData, orderData }) => {
         text: "Thank you for your order",
       });
       handleClose();
+      setCart([])
+      setAddress("")
+      setPhone("")
+      setEmail("")
+      setName("")
     },
     onError: (error) => {
       MySwal.fire({
@@ -119,6 +124,11 @@ OrderConfirmationModal.propTypes = {
     phone: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
   }).isRequired,
+  setCart: PropTypes.func,
+  setName: PropTypes.func,
+  setAddress: PropTypes.func,
+  setPhone: PropTypes.func,
+  setEmail: PropTypes.func,
 };
 
 

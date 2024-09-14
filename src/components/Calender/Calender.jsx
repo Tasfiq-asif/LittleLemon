@@ -365,10 +365,19 @@ const Calender = () => {
             <Box
               sx={{ mt: 3, display: "flex", justifyContent: "space-between" }}
             >
-              <Button variant="outlined" size="md" onClick={handleNewReservation}>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={handleNewReservation}
+              >
                 Make Another Reservation
               </Button>
-              <Button variant="contained" size="md" onClick={handleGoHome}>
+              <Button
+                variant="contained"
+                sx={{ padding: "2px 6px", fontSize: "12px", minWidth: "60px" }}
+                size="small"
+                onClick={handleGoHome}
+              >
                 Go to Home
               </Button>
             </Box>
