@@ -52,7 +52,7 @@ const Cart = () => {
       const totalPrice = cart.reduce((total,item) => total + item.price * getItemQuantityCount(item),0)
 
 
-        const userData = { name, email, phone, address };
+        const userData = { name, email, phone, address,role:"guest" };
 
         const orderData = { orderItems ,totalPrice};
 
