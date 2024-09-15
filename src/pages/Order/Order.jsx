@@ -3,6 +3,7 @@ import { axiosPublic } from "../../hooks/useAxiosPublic";
 import { useCart } from "../../providers/CartProvider";
 import { Box, Button, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
+import PageHeader from "../../components/Header/PageHeader";
 
 
 
@@ -26,15 +27,7 @@ const Order = () => {
 console.log(cart)
     return (
       <Box sx={{ p: 4, backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
-        <Typography
-          variant="h4"
-          textAlign="center"
-          mb={4}
-          fontWeight="bold"
-          color="primary"
-        >
-          Order Food
-        </Typography>
+       <PageHeader text={"Order Food"}/>
         <Box
           display={"flex"}
           flexWrap={"wrap"}

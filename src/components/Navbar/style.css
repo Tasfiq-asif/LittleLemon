@@ -1,0 +1,8 @@
+.bordered-text {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #495F57; /* Text color */
+  -webkit-text-stroke: .5px #FACC14; /* Stroke color and width */
+}
+
+

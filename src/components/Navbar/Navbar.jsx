@@ -20,6 +20,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import useAuth from "../../hooks/useAuth";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCart } from "../../providers/CartProvider";
+import "./style.css"
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -63,8 +64,12 @@ const Navbar = () => {
   return (
     <>
       <AppBar
-        position="static"
-        sx={{ bgcolor: "background.default", boxShadow: 0 }}
+        position="sticky"
+        sx={{
+          backgroundColor: "rgba(73, 95, 87, 0.1)", // Semi-transparent background
+          boxShadow: 0,
+          zIndex: 1200, // Ensure the AppBar stays on top of other content
+        }}
       >
         <Toolbar
           sx={{ display: "flex", justifyContent: "space-between", px: 2 }}
@@ -79,7 +84,7 @@ const Navbar = () => {
                 fontSize: "1.5rem",
               }}
             >
-              Little Lemon
+              <h1 className="bordered-text">Little Lemon</h1>
             </NavLink>
           </Typography>
           <div className="flex justify-between">
@@ -120,8 +125,14 @@ const Navbar = () => {
               )}
             </nav>
             {/* Cart */}
-            <IconButton aria-label="cart" onClick={()=>navigate('/cart')}>
-              <StyledBadge badgeContent={cart.reduce((acc,item)=> acc+item.quantity,0)} color="secondary">
+            <IconButton aria-label="cart" onClick={() => navigate("/cart")}>
+              <StyledBadge
+                badgeContent={cart.reduce(
+                  (acc, item) => acc + item.quantity,
+                  0
+                )}
+                color="secondary"
+              >
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>

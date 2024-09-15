@@ -12,7 +12,7 @@ const Banner = () => {
               Little Lemon{" "}
             </h1>
             <p className="mt-1 md:mt-2">Chicago</p>
-            <p className="w-full md:w-1/2 mt-10">
+            <p className="w-full md:w-2/3 lg:w-2/3 mt-10">
               We are a family owned mediteranean restaurant focused on
               traditional recipes served with a modern twist.
             </p>
