@@ -11,8 +11,19 @@ const ItemCard = ({menuitem}) => {
         <Card
           key={menuitem._id}
           sx={{
-            width: 400,
-            height: 620,
+            width: {
+              xs: 300, // Full width for extra small screens
+              sm: 300, // Width for small screens
+              md: 400, // Width for medium screens
+              lg: 400, // Width for large screens
+            },
+            height: {
+              xs: 400, // Height for extra small screens
+              sm: 500, // Height for small screens
+              md: 620, // Height for medium screens
+              lg: 620, // Height for large screens
+            },
+
             mb: 4,
             borderRadius: 4,
             boxShadow: 5,
@@ -25,14 +36,17 @@ const ItemCard = ({menuitem}) => {
         >
           <CardMedia
             component={"img"}
-            height={"180"}
             image={menuitem.imageUrl}
             alt={menuitem.name}
             sx={{
               borderRadius: "4px 4px 0 0",
               objectFit: "cover", // Adjust this to "contain" if you want to preserve aspect ratio
               width: "100%", // Ensure the image takes up the full width
-              height: "380px", // Ensure the height is as specified
+              height: {
+                xs:180,
+                sm:280,
+                md:380
+            }, // Ensure the height is as specified
               transition: "transform 0.3s ease-in-out", // Smooth image scaling
               "&:hover": {
                 transform: "scale(1.1)", // Scale image slightly on hover
