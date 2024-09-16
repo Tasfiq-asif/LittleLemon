@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css"; // Base Swiper styles
 import "swiper/css/pagination"; // Pagination module styles
 import "swiper/css/navigation"; // Navigation module styles
-import { Autoplay, Pagination, Navigation, A11y } from "swiper/modules"; 
+import { Autoplay, Pagination } from "swiper/modules";
 import "./reviews.css"
 
 const Reviews = () => {

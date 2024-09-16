@@ -1,5 +1,6 @@
 import { Avatar, Box, Card, CardContent, Rating, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import PropTypes from "prop-types";
 
 
 
@@ -48,6 +49,13 @@ const ReviewCard = ({name,img,rating,review}) => {
         </CardContent>
       </Card>
     );
+};
+
+ReviewCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  img: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+  review: PropTypes.string.isRequired,
 };
 
 export default ReviewCard;
