@@ -1,0 +1,28 @@
+{
+  "reviews": [
+    {
+      "name": "John Waltz",
+      "avatarUrl": "https://i.ibb.co.com/K7B04r9/boy6.jpg",
+      "review": "Amazing food and excellent service! Highly recommend the pasta.",
+      "rating": 4.5
+    },
+    {
+      "name": "Jane Smith",
+      "avatarUrl": "https://i.ibb.co.com/p4gmfX2/girl5.jpg",
+      "review": "The ambiance was perfect, and the dessert was divine. Will definitely come again!",
+      "rating": 5
+    },
+    {
+      "name": "Emily Johnson",
+      "avatarUrl": "https://i.ibb.co.com/25V3wPR/girl2.jpg",
+      "review": "The main course was good, but the service was a bit slow. Overall, a nice experience.",
+      "rating": 3.8
+    },
+    {
+      "name": "Michael Brown",
+      "avatarUrl": "https://i.ibb.co.com/Ytrhzvz/boy5.jpg",
+      "review": "Great variety on the menu, and the staff was friendly. Enjoyed the evening!",
+      "rating": 4.2
+    }
+  ]
+}

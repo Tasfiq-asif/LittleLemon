@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import maggi from '../../assets/maggi.jpg'
 import "./style.css"
+import { Button } from '@mui/material';
 
 const Banner = () => {
   
@@ -17,9 +18,9 @@ const Banner = () => {
               traditional recipes served with a modern twist.
             </p>
             <Link to={"/reserve"}>
-              <button className="btn bg-yellow-400 mt-10 hover:bg-yellow-600 border-none text-white">
+              <Button sx={{marginTop:4,paddingX:2}}>
                 Reserve a Table
-              </button>
+              </Button>
             </Link>
           </div>
           <div className="hidden lg:block h-auto mt-10 mx-auto w-1/2 ">

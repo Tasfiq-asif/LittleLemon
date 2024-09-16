@@ -1,0 +1,44 @@
+/* Swiper container custom styles */
+.swiper {
+  width: 100%;
+  max-width: 1500px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Swiper slide custom styles */
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: transparent;
+  border-radius: 10px;
+  width: 100%;
+}
+
+/* Pagination bullet styles */
+.swiper-pagination-bullet {
+  background-color: #ccc;
+  width: 12px;
+  height: 12px;
+  opacity: 1;
+  transition: background-color 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #007aff; /* Active bullet color */
+}
+
+/* Navigation button styles */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #007aff;
+  transition: color 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #ff4081; /* Hover color */
+}

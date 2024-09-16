@@ -9,7 +9,7 @@ const theme = createTheme({
       main: '#FACC14', // Secondary Yellow
     },
     background: {
-      default: '#f4f6f8',
+      default: '#FACC14',
        // Warm Beige/White
     },
     text: {
@@ -26,7 +26,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           color: '#FFFFFF',
-          background:'#FACC14' // Set button text color to white
+          background:'#FACC14', // Set button text color to white
+          '&:hover':{
+            backgroundColor:'#e6b918',
+            color:'#FFFFFF'
+          }
         },
       },
     },

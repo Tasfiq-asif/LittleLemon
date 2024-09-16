@@ -27,15 +27,15 @@ const Weekspecial = () => {
 
 
     return (
-      <div className="mt-24">
-        <div className="max-w-7xl px-10 md:pl-20 mx-auto flex justify-between gap-6">
+      <div>
+        <div className="max-w-7xl px-10 md:pl-20 mx-auto flex justify-between gap-6 ">
           <Header text={"Specials"} />
           <Button onClick={() => navigate("/order")} color="primary">
             Order online
           </Button>
         </div>
 
-          <div className="flex justify-around flex-wrap max-w-7xl mx-auto mt-10 gap-6 px-3">
+          <div className="flex justify-around flex-wrap max-w-7xl mx-auto mt-10 gap-6 px-3  ">
             {menuItems.map((menuitem) => (
               <ItemCard key={menuitem._id} menuitem={menuitem} />
             ))}

@@ -19,7 +19,6 @@
   -webkit-text-fill-color: transparent; /* Make text color transparent */
   font-size: rem; /* Font size */
   font-weight: bold; /* Font weight */
-
-  margin-top: 5rem; /* Equivalent to Tailwind's mt-20 */
+/* Equivalent to Tailwind's mt-20 */
   animation: gradientAnimation 3s ease infinite; /* Apply animation */
 }

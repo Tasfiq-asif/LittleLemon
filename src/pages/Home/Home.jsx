@@ -1,15 +1,19 @@
+
+
 import Banner from "../../components/Banner/Banner";
-import Testimonials from "../../components/Testimonials/Testimonials";
+import Reviews from "../../components/Reviews/Reviews";
+
 import Weekspecial from "../../components/WeekSpecial/Weekspecial";
+
 
 const Home = () => {
     return (
-        <div>
-            <Banner/>
-            <Weekspecial/>
-            <Testimonials/>
-        
-        </div>
+      <div className="space-y-10">
+        <Banner />
+        <Weekspecial />
+        <Reviews />
+
+      </div>
     );
 };
 
