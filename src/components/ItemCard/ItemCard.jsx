@@ -12,7 +12,7 @@ const ItemCard = ({menuitem}) => {
           key={menuitem._id}
           sx={{
             width: {
-              xs: 300, // Full width for extra small screens
+              xs: 280, // Full width for extra small screens
               sm: 300, // Width for small screens
               md: 400, // Width for medium screens
               lg: 400, // Width for large screens

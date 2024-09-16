@@ -185,7 +185,7 @@ const Calender = () => {
       };
 
        const handleGoHome = () => {
-         navigate("/home"); // Redirect to home route
+         navigate("/"); // Redirect to home route
        };
 
     return (
@@ -349,7 +349,7 @@ const Calender = () => {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Booking Confirmation
+              Booking Confirmed
             </Typography>
 
             {reservationDetails && (
