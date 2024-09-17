@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, TextField, Tooltip, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import uploadImage from "../../utils/uploadImage";
 import { axiosPublic } from "../../hooks/useAxiosPublic";
@@ -13,6 +13,7 @@ const AddItem = () => {
   const [foodImage, setFoodImage] = useState(null);
   const [items, setItems] = useState([]);
   const [editingItemId, setEditingItemId] = useState(null);
+  const [loading,setLoading] = useState(false);
   const fileInputRef = useRef(null);
 
   const fetchItems = async () => {
@@ -22,6 +23,7 @@ const AddItem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     let imageUrl = "";
 
@@ -60,11 +62,12 @@ const AddItem = () => {
       fileInputRef.current.value = "";
     }
     fetchItems();
+    setLoading(false)
   };
 
   // Handle delete item
   const handleDelete = async (id) => {
-    await axiosPublic.delete(`/${id}`);
+    await axiosPublic.delete(`/deleteitem/${id}`);
     fetchItems(); // Refresh the items after deleting
   };
 
@@ -146,8 +149,13 @@ const AddItem = () => {
           ref={fileInputRef}
         />
 
-        <Button variant="contained" type="submit">
-          {editingItemId ? "Update item" : "Add item"}
+        <Button
+         variant="contained"
+         type="submit"
+         disabled={loading}
+         startIcon={loading && <CircularProgress size={20} color="inherid"/>}
+         >
+          {loading ? "Submitting..." : editingItemId ? "Update item" : "Add item"}
         </Button>
       </Box>
 
