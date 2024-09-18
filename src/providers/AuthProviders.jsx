@@ -40,9 +40,9 @@ const AuthProviders = ({children}) => {
     const logOut = async () => {
       setLoading(true);
       try {
-        // await axios.get(`${import.meta.env.VITE_API_URL}/logout`,{
-        //     withCredentials:true,
-        // })
+        await axios.get(`${import.meta.env.VITE_API_URL}/logout`,{
+            withCredentials:true,
+        })
         return await signOut(auth);
         // Returning the promise so it can be awaited elsewhere
       } catch (error) {
@@ -81,7 +81,7 @@ const AuthProviders = ({children}) => {
         const unsubscribe = onAuthStateChanged(auth,(currentUser)=>{
             setUser(currentUser);
             if(currentUser){
-                getToken(currentUser.emai)
+                getToken(currentUser.email)
             }
             setLoading(false)
         })
