@@ -22,6 +22,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCart } from "../../providers/CartProvider";
 import "./style.css"
 import useRoles from "../../hooks/useRole";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -41,7 +42,7 @@ const Navbar = () => {
   const {cart} =useCart()
   const [role] =useRoles()
 
-  console.log(role)
+
 
 
   const handleDrawerToggle = () => {
@@ -70,6 +71,10 @@ const Navbar = () => {
       navigate("/login"); // Navigate to the login page if not authenticated
     }
   };
+
+  if (loading){
+    return <LoadingSpinner/>
+  }
 
   return (
     <>
