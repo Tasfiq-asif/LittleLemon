@@ -23,6 +23,7 @@ import { useCart } from "../../providers/CartProvider";
 import "./style.css"
 import useRoles from "../../hooks/useRole";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import logo from "../../assets/Logo.svg"
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -99,7 +100,8 @@ const Navbar = () => {
                 fontSize: "1.5rem",
               }}
             >
-              <h1 className="bordered-text">Little Lemon</h1>
+              {/* <h1 className="bordered-text">Little Lemon</h1> */}
+              <img src={logo} alt=""  />
             </NavLink>
           </Typography>
           <div className="flex justify-between">

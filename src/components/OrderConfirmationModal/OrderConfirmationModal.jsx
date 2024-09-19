@@ -1,25 +1,32 @@
 import { useMutation } from "@tanstack/react-query";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { axiosPublic } from "../../hooks/useAxiosPublic";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import useAuth from "../../hooks/useAuth";
 
 const MySwal = withReactContent(Swal);
 const OrderConfirmationModal = ({ open, handleClose, userData, orderData,setCart,setName,setEmail,setAddress,setPhone }) => {
   const [loading, setLoading] = useState(false);
+  const{user} =useAuth()
 
- const saveUserMutation = useMutation({
-   mutationFn: (userData) => axiosPublic.post("/user", userData),
-   onSuccess: () => {
-     toast.success("User data saved successfully");
-   },
-   onError: (error) => {
-     console.error("Error saving user data", error);
-   },
- });
+const saveUserMutation = useMutation({
+  mutationFn: (userData) => axiosPublic.post("/user", userData),
+  onSuccess: () => {
+    toast.success("User data saved successfully");
+  },
+  onError: (error) => {
+    console.error("Error saving user data", error);
+    toast.error("Failed to save user data");
+  },
+});
+
+ useEffect(() => {
+  if(user){setEmail(user.email);}
+ },[setEmail, user])
 
 
   const confirmOrderMutation = useMutation({

@@ -1,4 +1,6 @@
 import { Container, Grid, Typography, Link, Box } from "@mui/material";
+import logo from "../../assets/small_logo.png";
+
 
 const Footer = () => {
   return (
@@ -13,6 +15,9 @@ const Footer = () => {
       <Container>
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4}>
+            <img src={logo} alt="" height={60} width={40} />
+          </Grid>
             <Typography variant="h6" gutterBottom>
               Little Lemon
             </Typography>
