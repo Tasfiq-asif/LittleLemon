@@ -54,7 +54,6 @@ const Cart = () => {
     orderTimestamp: timestamp,
   };
 
-  console.log(orderData);
 
   return (
     <Box

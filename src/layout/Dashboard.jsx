@@ -2,6 +2,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import {  Typography, Box, Stack } from "@mui/material";
 import { styled } from "@mui/system";
+import useRoles from "../hooks/useRole";
 
 // Styled components for the side panel and links
 const Sidebar = styled(Box)({
@@ -42,6 +43,8 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
 }));
 
 const Dashboard = () => {
+  const [role] = useRoles()
+
   return (
     <Box display="flex">
       <Sidebar>
@@ -49,12 +52,25 @@ const Dashboard = () => {
           Dashboard
         </Typography>
         <Stack spacing={2}>
-          <StyledNavLink to="/dashboard/add-item">Add Item</StyledNavLink>
+          {role === "admin" && (
+            <>
+              <StyledNavLink to="/dashboard/add-item">Add Item</StyledNavLink>
 
+              <StyledNavLink to="/dashboard/reservation-request">
+                Reservation Requests
+              </StyledNavLink>
+            </>
+          )}
 
-          <StyledNavLink to="/dashboard/reservation-request">
-            Reservation Requests
-          </StyledNavLink>
+          {role === "guest" && (
+            <>
+              <StyledNavLink to="/dashboard/Ordered-item">My Orders</StyledNavLink>
+
+              <StyledNavLink to="/dashboard/myreservations">
+                My Reservations
+              </StyledNavLink>
+            </>
+          )}
 
           <StyledNavLink to="/" end>
             Home

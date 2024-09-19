@@ -4,6 +4,7 @@ import uploadImage from "../../utils/uploadImage";
 import { axiosPublic } from "../../hooks/useAxiosPublic";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { axiosSecure } from "../../hooks/useAxiosSecure";
 
 
 const AddItem = () => {
@@ -47,9 +48,9 @@ const AddItem = () => {
     };
 
     if (editingItemId) {
-      await axiosPublic.put(`/edititem/${editingItemId}`, newItem);
+      await axiosSecure.put(`/edititem/${editingItemId}`, newItem);
     } else {
-      await axiosPublic.post("/menuitem", newItem);
+      await axiosSecure.post("/menuitem", newItem);
     }
     // Reset form and refresh item list
     setFoodName("");
@@ -67,7 +68,7 @@ const AddItem = () => {
 
   // Handle delete item
   const handleDelete = async (id) => {
-    await axiosPublic.delete(`/deleteitem/${id}`);
+    await axiosSecure.delete(`/deleteitem/${id}`);
     fetchItems(); // Refresh the items after deleting
   };
 
