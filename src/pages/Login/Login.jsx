@@ -21,7 +21,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const { signIn, signInWithGoogle, loading, user } = useAuth();
+  const { signIn, signInWithGoogle, loading, user,setLoading } = useAuth();
   const location = useLocation();
   const from = location.state?.from || "/";
 
@@ -62,15 +62,18 @@ const Login = () => {
      }
    };
 
-  const handleSubmit = (event) => {
+  const handleSubmit =async (event) => {
     event.preventDefault();
     if (validate()) {
+      setLoading(true);
       try {
-        signIn(email, password);
+        await signIn(email, password);
         toast.success("Sign In Successful");
         navigate(from);
       } catch (err) {
         toast.error(err?.message);
+      } finally {
+        setLoading(false); // End loading
       }
     }
   };

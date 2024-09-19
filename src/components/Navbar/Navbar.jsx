@@ -21,6 +21,7 @@ import useAuth from "../../hooks/useAuth";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCart } from "../../providers/CartProvider";
 import "./style.css"
+import useRoles from "../../hooks/useRole";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -38,6 +39,9 @@ const Navbar = () => {
   const { user, loading, logOut } = useAuth();
   const navigate =useNavigate()
   const {cart} =useCart()
+  const [role] =useRoles()
+
+  console.log(role)
 
 
   const handleDrawerToggle = () => {
@@ -51,6 +55,12 @@ const Navbar = () => {
     { href: "/reserve", label: "Reservation" },
 
   ];
+
+  //conditionally add Dashboard to Navbar
+
+  if (role === 'admin' || role === 'guest'){
+    routes.push({ href: "/dashboard", label:'Dashboard' });
+  }
 
   const handleAuthAction = () => {
     if (user) {
