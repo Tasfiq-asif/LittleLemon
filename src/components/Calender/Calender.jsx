@@ -13,9 +13,9 @@ import "./Calender.css"
 import { Box, Button, FormControl,  InputLabel, MenuItem, Modal, Select, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { axiosPublic } from "../../hooks/useAxiosPublic";
 
 
 
@@ -101,8 +101,8 @@ const Calender = () => {
   useEffect(() => {
     const fetchSlots = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/available-slots"
+        const response = await axiosPublic(
+          "/available-slots"
         );
         setFetchedSlots(response.data); // Set the fetched slots data to state
       } catch (error) {
@@ -174,7 +174,7 @@ const Calender = () => {
       time: selectedTime,
     };
     setReservationDetails(reservationData);
-    await axios.post("http://localhost:8000/reservation", reservationData);
+    await axiosPublic.post("/reservation", reservationData);
     handleOpen();
   };
 
