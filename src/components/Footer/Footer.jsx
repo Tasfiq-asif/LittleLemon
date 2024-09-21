@@ -22,7 +22,7 @@ const Footer = () => {
               Little Lemon
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              123 Citrus Avenue, Lemon City, LC 12345
+              123 Citrus Avenue, Lemon City, LC 1234
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Phone: (123) 456-7890
