@@ -1,5 +1,4 @@
-# React + Vite
-
+Little Lemon
 ## Live Demo
 Check out the live demo of the website: [Little Lemoon Live](https://littlelemon-6efed.web.app)
 
