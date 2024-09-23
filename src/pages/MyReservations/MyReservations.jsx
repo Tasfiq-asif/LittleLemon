@@ -15,7 +15,7 @@ const MyReservations = () => {
     const getStatusColor = (status) =>{
         switch(status){
             case 'approved':
-                return "#659b30";
+                return "#659b39";
             case 'pending':
                 return "#f4ce13";
         }

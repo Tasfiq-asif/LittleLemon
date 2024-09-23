@@ -5,7 +5,7 @@ Check out the live demo of the website: [Little Lemoon Live](https://littlelemon
 # Little Lemon Restaurant Web Application
 
 ## Introduction
-Origianlly the was my Meta Front-End Developer Capstone project and i decided to make it full stack.
+Origianlly It was my Meta Front-End Developer Capstone project and i decided to make it a fullstack web application.
 
 ## Project Description
 The Little Lemon Restaurant web application is designed to enhance customer convenience through online ordering and reservation management. Our dynamic booking system ensures that available times are adjusted in real-time, offering an optimized user experience. The project includes user authentication via Firebase, enhanced security with JWT and HTTP-only cookies, and an admin dashboard for restaurant management.
@@ -64,13 +64,17 @@ Before running the project, ensure you have the following installed:
    FIREBASE_API_KEY=your_firebase_api_key
    JWT_SECRET=your_jwt_secret
 
+
 ### Run the application:
 
-    ```bash
+```bash
     npm start
     # Or with yarn
     yarn start
-Access the application in your browser at [http://localhost:3000](http://localhost:3000).
+
+    
+
+5.Access the application in your browser at [http://localhost:3000](http://localhost:3000).
 
 ## Configuration
 
