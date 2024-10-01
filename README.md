@@ -1,6 +1,6 @@
 Little Lemon
 ## Live Demo
-Check out the live demo of the website: [Little Lemoon Live](https://littlelemon-6efed.web.app)
+Check out the live demo of the website: [Little Lemon Live](https://littlelemon-6efed.web.app)
 
 # Little Lemon Restaurant Web Application
 
