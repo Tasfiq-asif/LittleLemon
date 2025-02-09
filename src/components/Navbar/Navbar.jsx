@@ -12,7 +12,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Button,
   styled,
   Badge,
 } from "@mui/material";
@@ -20,10 +19,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import useAuth from "../../hooks/useAuth";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCart } from "../../providers/CartProvider";
-import "./style.css"
+import "./style.css";
 import useRoles from "../../hooks/useRole";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-import logo from "../../assets/Logo.svg"
+import logo from "../../assets/Logo.svg";
+import CustomButton from "../CustomButton/CustomButton";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -39,12 +39,9 @@ const Navbar = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { user, loading, logOut } = useAuth();
-  const navigate =useNavigate()
-  const {cart} =useCart()
-  const [role] =useRoles()
-
-
-
+  const navigate = useNavigate();
+  const { cart } = useCart();
+  const [role] = useRoles();
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -55,26 +52,25 @@ const Navbar = () => {
     { href: "/about", label: "About" },
     { href: "/order", label: "Order Online" },
     { href: "/reserve", label: "Reservation" },
-
   ];
 
   //conditionally add Dashboard to Navbar
 
-  if (role === 'admin' || role === 'guest'){
-    routes.push({ href: "/dashboard", label:'Dashboard' });
+  if (role === "admin" || role === "guest") {
+    routes.push({ href: "/dashboard", label: "Dashboard" });
   }
 
   const handleAuthAction = () => {
     if (user) {
       logOut();
-      navigate("/login") // Call the logout function when user is authenticated
+      navigate("/login"); // Call the logout function when user is authenticated
     } else {
       navigate("/login"); // Navigate to the login page if not authenticated
     }
   };
 
-  if (loading){
-    return <LoadingSpinner/>
+  if (loading) {
+    return <LoadingSpinner />;
   }
 
   return (
@@ -82,9 +78,9 @@ const Navbar = () => {
       <AppBar
         position="sticky"
         sx={{
-          backgroundColor: "rgba(73, 95, 87, 0.1)", // Semi-transparent background
+          backgroundColor: "rgba(73, 95, 87, 0.1)",
           boxShadow: 0,
-          zIndex: 1200, // Ensure the AppBar stays on top of other content
+          zIndex: 1200,
         }}
       >
         <Toolbar
@@ -101,7 +97,7 @@ const Navbar = () => {
               }}
             >
               {/* <h1 className="bordered-text">Little Lemon</h1> */}
-              <img src={logo} alt=""  />
+              <img src={logo} alt="" />
             </NavLink>
           </Typography>
           <div className="flex justify-between">
@@ -125,9 +121,13 @@ const Navbar = () => {
                       {route.label}
                     </NavLink>
                   ))}
-                  <Button onClick={handleAuthAction}>
+                  <CustomButton
+                    variant="primary"
+                    onClick={handleAuthAction}
+                    className="ml-2"
+                  >
                     {user ? "LogOut" : "LogIn"}
-                  </Button>
+                  </CustomButton>
                 </Box>
               ) : (
                 <IconButton

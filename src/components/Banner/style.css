@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 
 @keyframes gradientAnimation {
   0% {
@@ -13,12 +13,17 @@
 }
 
 .gradient-text {
-  background: linear-gradient(to right, #FFEB3B, #4CAF50, #FFEB3B); /* Yellow to Green gradient */
+  background: linear-gradient(
+    to right,
+    #ffeb3b,
+    #4caf50,
+    #ffeb3b
+  ); /* Yellow to Green gradient */
   background-size: 200% 100%;
   -webkit-background-clip: text; /* Apply gradient to text */
   -webkit-text-fill-color: transparent; /* Make text color transparent */
   font-size: rem; /* Font size */
   font-weight: bold; /* Font weight */
-/* Equivalent to Tailwind's mt-20 */
+  /* Equivalent to Tailwind's mt-20 */
   animation: gradientAnimation 3s ease infinite; /* Apply animation */
 }

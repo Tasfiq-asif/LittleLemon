@@ -1,9 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.css-16nxa1f-MuiTypography-root-MuiDatePickerToolbar-title{
-    margin: auto;
+.css-16nxa1f-MuiTypography-root-MuiDatePickerToolbar-title {
+  margin: auto;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #d1d5db;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: #fbbf24;
+  width: 24px;
+  border-radius: 5px;
+}
+
+/* Smooth slide transitions */
+.swiper-slide {
+  transition: transform 0.3s ease-out;
+}
+
+/* Optional: Add a subtle hover effect to the active slide */
+.swiper-slide-active {
+  transform: translateY(-5px);
 }

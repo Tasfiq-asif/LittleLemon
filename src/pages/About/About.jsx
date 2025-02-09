@@ -1,32 +1,13 @@
-
 import { Container, Typography, Box } from "@mui/material";
 import { motion } from "framer-motion";
-
-
-import './About-page.css'
+import PageHeader from "../../components/Header/PageHeader";
+import "./About-page.css";
 
 const About = () => {
-
-
   return (
     <Box component="section" sx={{ padding: "40px 0" }}>
       <Container>
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-
-            <Typography
-              variant="h3"
-              align="center"
-              gutterBottom
-              sx={{ fontWeight: "bold", mb: 4 }}
-            >
-              About Little Lemon
-            </Typography>
-
-        </motion.div>
+        <PageHeader text={"About Little Lemon"} />
 
         {/* Main About Section */}
         <div className="about-section">
